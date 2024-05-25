@@ -23,6 +23,12 @@ pipeline {
                 sh 'docker push $ECR_IMAGE_URI'
             }
         }
+        stage("deploy") {
+            agent any
+            steps {
+                sh 'docker run -d -p 8000 $ECR_IMAGE_URI'
+            }
+        }
         stage('cleanUpImage') {
             agent any
             steps {
