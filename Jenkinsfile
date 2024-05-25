@@ -26,7 +26,7 @@ pipeline {
         stage("deploy") {
             agent any
             steps {
-                sh 'docker run -d -p 8000 $ECR_IMAGE_URI'
+                sh 'ecs-cli compose service up --cluster-config ProdClusterPythonJGD --ecs-params image=$ECR_IMAGE_URI:latest, task_cpu=256,task_memory=512 --launch-type FARGATE --name api-python --container-name app_python_$BRANCH_NAME --container-port 8000'
             }
         }
         stage('cleanUpImage') {
