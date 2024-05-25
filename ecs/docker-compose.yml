@@ -1,0 +1,10 @@
+version: '2'
+services:
+  api-python:
+    image: 590183952025.dkr.ecr.us-east-2.amazonaws.com/api-python:latest
+    mem_reservation: 256m
+    mem_limit: 512m
+    command: gunicorn -k uvicorn.workers.UvicornWorker -w 1 app:app --bind 0.0.0.0:8000
+    ports:
+      - 0:8000
+    
