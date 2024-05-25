@@ -9,6 +9,18 @@ pipeline {
             agent any
             steps { init() }
         }
+        stage("buildECRCotainer") {
+            agent any
+            steps {
+                sh 'docker build -t "app_python_$BRANCH_NAME" --no-cache -f $WORKSPACE/Dockerfile .'
+            }
+        }
+        stage('cleanUpImage') {
+            agent any
+            steps {
+                sh 'docker rmi app_python_$BRANCH_NAME'
+            }
+        }
     }
 }
 
